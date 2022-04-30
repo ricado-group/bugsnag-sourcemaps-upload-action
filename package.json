@@ -1,0 +1,28 @@
+{
+  "name": "@ricado/bugsnag-sourcemaps-upload-action",
+  "version": "0.1.0",
+  "description": "A Simple Action that uses `@bugsnag/source-maps` to upload sourcemaps from a Local Directory to Bugsnag",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "ncc build src/index.ts --source-map --minify --license licenses.txt",
+    "prepare": "husky install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ricado-group/bugsnag-sourcemaps-upload-action.git"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ricado-group/bugsnag-sourcemaps-upload-action/issues"
+  },
+  "homepage": "https://github.com/ricado-group/bugsnag-sourcemaps-upload-action#readme",
+  "devDependencies": {
+    "@vercel/ncc": "^0.33.4",
+    "husky": "^7.0.4",
+    "typescript": "^4.6.4"
+  },
+  "dependencies": {
+    "@actions/core": "^1.7.0",
+    "@bugsnag/source-maps": "^2.3.1"
+  }
+}

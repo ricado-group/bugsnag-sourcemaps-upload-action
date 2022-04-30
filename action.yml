@@ -1,0 +1,32 @@
+name: 'Bugsnag Source Maps Upload'
+description: 'A Simple Action that uses `@bugsnag/source-maps` to upload sourcemaps from a Local Directory to Bugsnag'
+author: 'RICADO Group'
+branding:
+  icon: 'link'
+  color: 'blue'
+
+# Inputs
+inputs:
+  api-key:
+    description: 'A Bugsnag API Key'
+    required: true
+  directory:
+    description: 'Path to the Directory containing Source Map Files (e.g. ./sourcemaps)'
+    required: true
+  base-url:
+    description: 'Base URL that JS Bundles are served from (can contain * wildcards - e.g. https://*.mydomain.com/js)'
+    required: true
+  app-version:
+    description: 'The Version of the Application these Source Maps belong to (this should match the `appVersion` configured in your Notifier)'
+    required: true
+  overwrite:
+    description: 'Whether to replace Source Maps uploaded with the same Version'
+    required: false
+    default: 'false'
+  endpoint:
+    description: 'Customize the Upload Endpoint for Bugsnag On-Premise'
+    required: false
+
+runs:
+  using: 'node16'
+  main: 'dist/index.js'
