@@ -1,5 +1,6 @@
 import * as bugsnag from '@bugsnag/source-maps';
 import * as core from '@actions/core';
+import { LogLevel } from 'consola';
 
 interface BugsnagUploadOpts {
     apiKey: string;
@@ -8,6 +9,18 @@ interface BugsnagUploadOpts {
     appVersion: string;
     overwrite?: boolean;
     endpoint?: string;
+	logger?: Logger;
+}
+
+type Logger = {
+    trace: (...args: unknown[]) => void;
+    debug: (...args: unknown[]) => void;
+    info: (...args: unknown[]) => void;
+    success: (...args: unknown[]) => void;
+    warn: (...args: unknown[]) => void;
+    error: (...args: unknown[]) => void;
+    fatal: (...args: unknown[]) => void;
+    level: LogLevel;
 }
 
 async function run(): Promise<void>
@@ -51,6 +64,49 @@ async function run(): Promise<void>
 			baseUrl,
 			directory,
 			appVersion,
+			logger: {
+				debug: (...args: unknown[]) => {
+					if(args.length > 0 && typeof args[0] === 'string')
+					{
+						core.debug(args[0]);
+					}
+				},
+				error: (...args: unknown[]) => {
+					if(args.length > 0 && typeof args[0] === 'string')
+					{
+						core.error(args[0]);
+					}
+					else if(args.length > 0 && typeof args[0] === 'object' && args[0] instanceof Error)
+					{
+						core.error(args[0]);
+					}
+				},
+				info: (...args: unknown[]) => {
+					if(args.length > 0 && typeof args[0] === 'string')
+					{
+						core.info(args[0]);
+					}
+				},
+				success: (...args: unknown[]) => {
+					if(args.length > 0 && typeof args[0] === 'string')
+					{
+						core.info(args[0]);
+					}
+				},
+				warn: (...args: unknown[]) => {
+					if(args.length > 0 && typeof args[0] === 'string')
+					{
+						core.warning(args[0]);
+					}
+					else if(args.length > 0 && typeof args[0] === 'object' && args[0] instanceof Error)
+					{
+						core.warning(args[0]);
+					}
+				},
+				fatal: () => {},
+				trace: () => {},
+				level: LogLevel.Debug,
+			}
 		};
 
 		if(core.getInput('overwrite').length > 0)
