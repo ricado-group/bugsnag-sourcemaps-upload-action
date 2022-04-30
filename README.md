@@ -3,7 +3,7 @@ A Simple Action that uses `@bugsnag/source-maps` to upload sourcemaps from a Loc
 
 ## Inputs
 
-### `api-key`
+### `apiKey`
 
 **Required** A Bugsnag API Key
 
@@ -11,11 +11,11 @@ A Simple Action that uses `@bugsnag/source-maps` to upload sourcemaps from a Loc
 
 **Required** Path to the Directory containing Source Map Files (e.g. ./sourcemaps)
 
-### `base-url`
+### `baseUrl`
 
 **Required** Base URL that JS Bundles are served from (can contain * wildcards - e.g. https://*.mydomain.com/js)
 
-### `app-version`
+### `appVersion`
 
 **Required** The Version of the Application these Source Maps belong to (this should match the `appVersion` configured in your Notifier)
 
@@ -34,10 +34,10 @@ _Optional_ Customize the Upload Endpoint for Bugsnag On-Premise
 ```yml
 uses: ricado-group/bugsnag-sourcemaps-upload-action@v1
 with:
-  api-key: ${{ secrets.BUGSNAG_APIKEY }}
+  apiKey: ${{ secrets.BUGSNAG_APIKEY }}
   directory: ./sourcemaps
-  base-url: 'https://*.mydomain.com/js'
-  app-version: '1.0.0'
+  baseUrl: 'https://*.mydomain.com/js'
+  appVersion: '1.0.0'
   overwrite: true
 ```
 

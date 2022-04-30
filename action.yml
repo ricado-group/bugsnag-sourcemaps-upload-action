@@ -7,16 +7,16 @@ branding:
 
 # Inputs
 inputs:
-  api-key:
+  apiKey:
     description: 'A Bugsnag API Key'
     required: true
   directory:
     description: 'Path to the Directory containing Source Map Files (e.g. ./sourcemaps)'
     required: true
-  base-url:
+  baseUrl:
     description: 'Base URL that JS Bundles are served from (can contain * wildcards - e.g. https://*.mydomain.com/js)'
     required: true
-  app-version:
+  appVersion:
     description: 'The Version of the Application these Source Maps belong to (this should match the `appVersion` configured in your Notifier)'
     required: true
   overwrite:

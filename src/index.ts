@@ -22,27 +22,27 @@ async function run(): Promise<void>
 			return;
 		}
 
-		const baseUrl = core.getInput('base-url');
+		const baseUrl = core.getInput('baseUrl');
 
 		if(baseUrl.length === 0)
 		{
-			core.setFailed(`The 'base-url' Input is Required`);
+			core.setFailed(`The 'baseUrl' Input is Required`);
 			return;
 		}
 
-		const apiKey = core.getInput('api-key');
+		const apiKey = core.getInput('apiKey');
 
 		if(apiKey.length === 0)
 		{
-			core.setFailed(`The 'api-key' Input is Required`);
+			core.setFailed(`The 'apiKey' Input is Required`);
 			return;
 		}
 
-		const appVersion = core.getInput('app-version');
+		const appVersion = core.getInput('appVersion');
 
 		if(appVersion.length === 0)
 		{
-			core.setFailed(`The 'app-version' Input is Required`);
+			core.setFailed(`The 'appVersion' Input is Required`);
 			return;
 		}
 
