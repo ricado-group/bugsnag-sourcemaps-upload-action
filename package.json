@@ -22,7 +22,7 @@
     "typescript": "^4.6.4"
   },
   "dependencies": {
-    "@actions/core": "^1.7.0",
+    "@actions/core": "^1.8.1",
     "@bugsnag/source-maps": "^2.3.1"
   }
 }
