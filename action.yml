@@ -1,6 +1,6 @@
 name: 'Bugsnag Source Maps Upload'
 description: 'A Simple Action that uses `@bugsnag/source-maps` to upload sourcemaps from a Local Directory to Bugsnag'
-author: 'RICADO Group'
+author: 'RICADO'
 branding:
   icon: 'link'
   color: 'blue'
@@ -28,5 +28,5 @@ inputs:
     required: false
 
 runs:
-  using: 'node16'
+  using: 'node20'
   main: 'dist/index.js'

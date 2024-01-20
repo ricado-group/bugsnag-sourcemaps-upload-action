@@ -18,7 +18,7 @@ jobs:
     steps:
       # Step 1 - Checkout Code
       - name: Checkout Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       
       # Step 2 - Extract Environment Variables
       - name: Extract Environment Variables
@@ -26,9 +26,9 @@ jobs:
       
       # Step 3 - Setup NodeJS
       - name: Setup NodeJS
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '16'
+          node-version: '20'
           registry-url: 'https://registry.npmjs.org'
       
       # Step 4 - Install NPM Packages
@@ -43,7 +43,7 @@ jobs:
       - name: Extract Package Version
         if: ${{ startsWith(github.ref, 'refs/tags/') }}
         id: packageVersion
-        uses: martinbeentjes/npm-get-version-action@v1.2.3
+        uses: martinbeentjes/npm-get-version-action@v1.3.1
       
       # Step 7 - Check Package Version
       - name: Check Package Version
@@ -54,18 +54,41 @@ jobs:
       - name: Generate the Changelog
         id: changelog
         if: ${{ startsWith(github.ref, 'refs/tags/') }}
-        uses: metcalfc/changelog-generator@v4.0.1
+        uses: metcalfc/changelog-generator@v4.2.0
         with:
-          myToken: ${{ secrets.GITHUB_TOKEN }}
+          mytoken: ${{ secrets.GITHUB_TOKEN }}
 
       # Step 9 - Create GitHub Release
       - name: Create GitHub Release
         if: ${{ startsWith(github.ref, 'refs/tags/') }}
-        uses: softprops/action-gh-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: ncipollo/release-action@v1
         with:
-          tag_name: ${{ env.CI_REF_NAME }}
           name: Release ${{ env.CI_REF_NAME }}
-          body: |
-            ${{ steps.changelog.outputs.changelog }}
+          body: ${{ steps.changelog.outputs.changelog }}
+          tag: ${{ env.CI_REF_NAME }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      # Step 10 - Extract Major Version Number
+      - name: Extract Major Version Number
+        id: extractMajorVersion
+        if: ${{ startsWith(github.ref, 'refs/tags/') }}
+        run: |
+          tagName=$(echo ${{ env.CI_REF_NAME }} | cut -d . -f 1)
+          echo "tagName=$tagName" >> $GITHUB_OUTPUT
+      
+      # Step 11 - Configure Git Metadata
+      - name: Configure Git Metadata
+        if: ${{ startsWith(github.ref, 'refs/tags/') }}
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+      
+      # Step 12 - Tag New Major Version
+      - name: Tag New Major Version
+        if: ${{ startsWith(github.ref, 'refs/tags/') }}
+        run: git tag -f ${{ steps.extractMajorVersion.outputs.tagName }} ${{ env.CI_REF_NAME }}
+      
+      # Step 13 - Push New Major Version Tag
+      - name: Push New Major Version Tag
+        if: ${{ startsWith(github.ref, 'refs/tags/') }}
+        run: git push origin ${{ steps.extractMajorVersion.outputs.tagName }} --force
