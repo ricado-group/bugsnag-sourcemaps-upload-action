@@ -1,6 +1,6 @@
 {
   "name": "@ricado/bugsnag-sourcemaps-upload-action",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "A Simple Action that uses `@bugsnag/source-maps` to upload sourcemaps from a Local Directory to Bugsnag",
   "main": "lib/index.js",
   "scripts": {
