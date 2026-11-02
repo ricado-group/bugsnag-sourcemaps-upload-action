@@ -18,7 +18,7 @@ jobs:
     steps:
       # Step 1 - Checkout Code
       - name: Checkout Code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
       
       # Step 2 - Extract Environment Variables
       - name: Extract Environment Variables
@@ -26,9 +26,9 @@ jobs:
       
       # Step 3 - Setup NodeJS
       - name: Setup NodeJS
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
-          node-version: '20'
+          node-version: '24'
           registry-url: 'https://registry.npmjs.org'
       
       # Step 4 - Install NPM Packages
@@ -54,7 +54,7 @@ jobs:
       - name: Generate the Changelog
         id: changelog
         if: ${{ startsWith(github.ref, 'refs/tags/') }}
-        uses: metcalfc/changelog-generator@v4.2.0
+        uses: metcalfc/changelog-generator@v5.0.1
         with:
           mytoken: ${{ secrets.GITHUB_TOKEN }}
 
